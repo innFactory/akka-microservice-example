@@ -1,0 +1,1 @@
+libraryDependencies ++= ReflectionResolver.getDefaultDependencies()

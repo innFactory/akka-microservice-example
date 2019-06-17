@@ -3,7 +3,7 @@ import scala.reflect.runtime.universe._
 
 object Version {
   val circeVersion = "0.10.0"
-  val akkaVersion = "2.5.23"
+  val akkaVersion = "2.5.20"
   val akkaHttpVersion = "10.1.8"
 }
 
@@ -16,6 +16,8 @@ object Dependencies {
 
   val akkaHttp = "com.typesafe.akka" %% "akka-http"   % akkaHttpVersion
   val akkaStreams = "com.typesafe.akka" %% "akka-stream" % akkaVersion
+  val akkaCluster = "com.typesafe.akka" %% "akka-cluster" % akkaVersion
+  val akkaClusterSharding = "com.typesafe.akka" %% "akka-cluster-sharding" % akkaVersion
 }
 
 
