@@ -1,11 +1,11 @@
 package de.innfactory.svc1
 
 import akka.actor.{ActorSystem, Props}
+import akka.discovery.Discovery
 import akka.http.scaladsl.UseHttp2.Always
 import akka.http.scaladsl.{Http, HttpConnectionContext}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-import com.lightbend.rp.common.SocketBinding
 import de.innfactory.svc1.grpc.GreeterServiceHandler
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
 import akka.util.Timeout
@@ -23,6 +23,8 @@ object Service1 extends App with Config {
   implicit val ec: ExecutionContext = actorSystem.dispatcher
   implicit val timeout: Timeout = Timeout(2 seconds)
 
+  val serviceDiscovery = Discovery(actorSystem).discovery
+
 
   val shardedGreeter = actorSystem.actorOf(ShardedGreeter.props, ShardedGreeter.shardName)
 
@@ -35,18 +37,15 @@ object Service1 extends App with Config {
   val intraService: HttpRequest => Future[HttpResponse] =
     GreeterServiceHandler(new GreeterServiceImpl(shardedGreeter))
 
-  val host = SocketBinding.bindHost("http", default = "127.0.0.1")
-  val httpPort = SocketBinding.bindPort("http", default = 8080)
-  val grpcPort = SocketBinding.bindPort("grpc", default = 8081)
 
   Http().bindAndHandle(
     routes,
-    host,
-    httpPort)
+    service1Host,
+    service1Port)
 
   Http().bindAndHandleAsync(
     intraService,
-    host,
-    grpcPort,
+    service1Host,
+    service1Grpc,
     connectionContext = HttpConnectionContext(http2 = Always))
 }

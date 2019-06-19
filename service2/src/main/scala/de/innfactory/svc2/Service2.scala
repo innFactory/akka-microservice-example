@@ -1,23 +1,36 @@
 package de.innfactory.svc2
 
 import akka.actor.ActorSystem
+import akka.discovery.{Discovery, ServiceDiscovery}
 import akka.grpc.GrpcClientSettings
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.PathMatchers
 import akka.stream.ActorMaterializer
-import com.lightbend.rp.common.SocketBinding
+import de.innfactory.common.Config
 import de.innfactory.svc1.grpc._
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.{Failure, Success}
+import scala.concurrent.duration._
 
-object Service2 extends App {
+object Service2 extends App with Config {
   println("Service 2 starting.")
 
   implicit val actorSystem = ActorSystem("service2")
   implicit val materializer = ActorMaterializer()
   implicit val ec: ExecutionContext = actorSystem.dispatcher
+
+  val serviceDiscovery = Discovery(actorSystem).discovery
+
+  println("Try to resolve gRPC endpoint for service 1")
+  val lookup: Future[ServiceDiscovery.Resolved] = serviceDiscovery.lookup("service1", 3 second)
+
+  val r = Await.result(lookup, 5 seconds)
+  val grpcHost = r.addresses.head.host
+
+  println(s"Resolved gRPC Endpoints $grpcHost:$service1Grpc")
+
 
   val routes =
     (get & pathEndOrSingleSlash) {
@@ -30,13 +43,17 @@ object Service2 extends App {
       }
     }
 
-  val host = SocketBinding.bindHost("http", default = "127.0.0.1")
-  val port = SocketBinding.bindPort("http", default = 8090)
-  Http().bindAndHandle(routes, host, port)
+
+  Http().bindAndHandle(
+    routes,
+    service2Host,
+    service2Port)
+
+  val clientSettings = GrpcClientSettings.connectToServiceAt(grpcHost, service1Grpc).withTls(false).withDeadline(2 seconds).withUserAgent("service2")
 
 
-  val clientSettings = GrpcClientSettings.fromConfig(
-    clientName = "project.WithSpecificConfiguration")
+    /*.fromConfig(
+    clientName = "project.WithSpecificConfiguration").with*/
 
   val client: GreeterService = GreeterServiceClient(clientSettings)
 

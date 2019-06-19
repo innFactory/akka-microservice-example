@@ -5,6 +5,7 @@ object Version {
   val circeVersion = "0.10.0"
   val akkaVersion = "2.5.20"
   val akkaHttpVersion = "10.1.8"
+  val akkaManagementVersion = "1.0.1"
 }
 
 object Dependencies {
@@ -18,6 +19,8 @@ object Dependencies {
   val akkaStreams = "com.typesafe.akka" %% "akka-stream" % akkaVersion
   val akkaCluster = "com.typesafe.akka" %% "akka-cluster" % akkaVersion
   val akkaClusterSharding = "com.typesafe.akka" %% "akka-cluster-sharding" % akkaVersion
+
+  val akkaManagement = "com.lightbend.akka.management" %% "akka-management" % akkaManagementVersion
 }
 
 
