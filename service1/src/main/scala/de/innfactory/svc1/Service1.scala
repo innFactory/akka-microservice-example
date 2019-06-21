@@ -8,6 +8,8 @@ import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import de.innfactory.svc1.grpc.GreeterServiceHandler
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
+import akka.management.cluster.bootstrap.ClusterBootstrap
+import akka.management.scaladsl.AkkaManagement
 import akka.util.Timeout
 import de.innfactory.common.Config
 
@@ -23,11 +25,13 @@ object Service1 extends App with Config {
   implicit val ec: ExecutionContext = actorSystem.dispatcher
   implicit val timeout: Timeout = Timeout(2 seconds)
 
-  val serviceDiscovery = Discovery(actorSystem).discovery
+  // Akka Management hosts the HTTP routes used by bootstrap
+  AkkaManagement(actorSystem).start()
+  // Starting the bootstrap process needs to be done explicitly
+  ClusterBootstrap(actorSystem).start()
 
 
   val shardedGreeter = actorSystem.actorOf(ShardedGreeter.props, ShardedGreeter.shardName)
-
 
   val routes =
     (get & pathEndOrSingleSlash) {
@@ -48,4 +52,6 @@ object Service1 extends App with Config {
     service1Host,
     service1Grpc,
     connectionContext = HttpConnectionContext(http2 = Always))
+
+
 }

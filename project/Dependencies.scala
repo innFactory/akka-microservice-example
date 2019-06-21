@@ -3,8 +3,8 @@ import scala.reflect.runtime.universe._
 
 object Version {
   val circeVersion = "0.10.0"
-  val akkaVersion = "2.5.20"
-  val akkaHttpVersion = "10.1.8"
+  val akkaVersion = "2.5.21"
+  val akkaHttpVersion = "10.1.7"
   val akkaManagementVersion = "1.0.1"
 }
 
@@ -21,6 +21,8 @@ object Dependencies {
   val akkaClusterSharding = "com.typesafe.akka" %% "akka-cluster-sharding" % akkaVersion
 
   val akkaManagement = "com.lightbend.akka.management" %% "akka-management" % akkaManagementVersion
+  val akkaManagementClusterBootstrap = "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % akkaManagementVersion
+  val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api" % akkaManagementVersion
 }
 
 

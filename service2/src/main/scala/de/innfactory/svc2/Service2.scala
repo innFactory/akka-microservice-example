@@ -6,6 +6,8 @@ import akka.grpc.GrpcClientSettings
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.PathMatchers
+import akka.management.cluster.bootstrap.ClusterBootstrap
+import akka.management.scaladsl.AkkaManagement
 import akka.stream.ActorMaterializer
 import de.innfactory.common.Config
 import de.innfactory.svc1.grpc._
@@ -21,16 +23,8 @@ object Service2 extends App with Config {
   implicit val materializer = ActorMaterializer()
   implicit val ec: ExecutionContext = actorSystem.dispatcher
 
-  val serviceDiscovery = Discovery(actorSystem).discovery
-
-  println("Try to resolve gRPC endpoint for service 1")
-  val lookup: Future[ServiceDiscovery.Resolved] = serviceDiscovery.lookup("service1", 3 second)
-
-  val r = Await.result(lookup, 5 seconds)
-  val grpcHost = r.addresses.head.host
-
-  println(s"Resolved gRPC Endpoints $grpcHost:$service1Grpc")
-
+  // Akka Management hosts the HTTP routes used by bootstrap
+  AkkaManagement(actorSystem).start()
 
   val routes =
     (get & pathEndOrSingleSlash) {
@@ -49,7 +43,7 @@ object Service2 extends App with Config {
     service2Host,
     service2Port)
 
-  val clientSettings = GrpcClientSettings.connectToServiceAt(grpcHost, service1Grpc).withTls(false).withDeadline(2 seconds).withUserAgent("service2")
+  val clientSettings = GrpcClientSettings.connectToServiceAt(service1Host, service1Grpc).withTls(false).withDeadline(2 seconds).withUserAgent("service2")
 
 
     /*.fromConfig(

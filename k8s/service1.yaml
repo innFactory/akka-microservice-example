@@ -1,0 +1,51 @@
+#deployment
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: service1
+  name: service1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: service1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: service1
+        actorSystemName: service1
+    spec:
+      containers:
+        - name: service1
+          image: innfactory-test/service1:0.1
+          #health
+          livenessProbe:
+            httpGet:
+              path: /alive
+              port: 8558
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8558
+          #health
+          ports:
+            # akka remoting
+            - name: remoting
+              containerPort: 2552
+              protocol: TCP
+            # akka-management bootstrap
+            - containerPort: 8558
+              protocol: TCP
+          env:
+            - name: AKKA_CLUSTER_BOOTSTRAP_SERVICE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: "metadata.labels['app']"
+#deployment
