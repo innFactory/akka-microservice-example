@@ -39,6 +39,10 @@ spec:
             - name: remoting
               containerPort: 2552
               protocol: TCP
+            # grpc
+            - name: grpc
+              containerPort: 8081
+              protocol: TCP
             # akka-management bootstrap
             - containerPort: 8558
               protocol: TCP
@@ -49,3 +53,19 @@ spec:
                   apiVersion: v1
                   fieldPath: "metadata.labels['app']"
 #deployment
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: service1
+  name: service1
+spec:
+  ports:
+    - name: "grpc"
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: service1
+  type: ClusterIP

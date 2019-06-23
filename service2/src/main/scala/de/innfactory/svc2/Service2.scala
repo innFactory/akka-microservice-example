@@ -1,6 +1,7 @@
 package de.innfactory.svc2
 
 import akka.actor.ActorSystem
+import akka.discovery.kubernetes.KubernetesApiServiceDiscovery
 import akka.discovery.{Discovery, ServiceDiscovery}
 import akka.grpc.GrpcClientSettings
 import akka.http.scaladsl.Http
@@ -26,6 +27,22 @@ object Service2 extends App with Config {
   // Akka Management hosts the HTTP routes used by bootstrap
   AkkaManagement(actorSystem).start()
 
+  val discovery = Discovery(actorSystem).loadServiceDiscovery("kubernetes-api")
+
+  println("Try to resolve gRPC endpoint for service 1")
+  val lookup: Future[ServiceDiscovery.Resolved] = discovery.lookup("service1", 20 seconds)
+
+  val r = Await.result(lookup, 20 seconds)
+  val grpcHost = r.addresses.head.address.get.toString.replace("/","")
+
+  println("resolved:")
+  println(r)
+  println("addresses:")
+  println(r.addresses)
+
+  println(s"Resolved gRPC Endpoints >$grpcHost:$service1Grpc<")
+
+
   val routes =
     (get & pathEndOrSingleSlash) {
       complete("Service 2 is ok")
@@ -43,7 +60,7 @@ object Service2 extends App with Config {
     service2Host,
     service2Port)
 
-  val clientSettings = GrpcClientSettings.connectToServiceAt(service1Host, service1Grpc).withTls(false).withDeadline(2 seconds).withUserAgent("service2")
+  val clientSettings = GrpcClientSettings.connectToServiceAt(grpcHost, service1Grpc).withTls(false).withDeadline(2 seconds).withUserAgent("service2")
 
 
     /*.fromConfig(
