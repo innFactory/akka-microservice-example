@@ -15,12 +15,13 @@ Steps to run the demo cluster:
 - configure docker eng in terminal ```eval $(minikube docker-env)```
 - go to k8s folder ```cd k8s```
 - run build script ```./build-images.sh```
-- configure kubernetes cluster roles before first run ```kubectl apply -f rbac-init-yaml```
+- configure kubernetes cluster roles before first run ```kubectl apply -f rbac-init.yaml```
 - run service 1 (backend) first ```kubectl apply -f service1.yaml```
 - run service 2 (frontend) ```kubectl apply -f service2.yaml```
 - get your minikube ip ```minikube ip```
 - get the service port of your NodePort Service 2 ```kubectl get services```
 - call you minikube ip on the given NodePort with your favorite browser -  The http result should be `Service 2 is ok`
+    - if this doesn't work use ```minikube service service2``` which shows the URL you have to use and opens your favourite browser -  The http result in the browser should be `Service 2 is ok`
 - call the get path greet with a name ```e.g http://192.168.99.100:32462/greet/innFactory``` -  The http result should be something like `Hello innFactory - The actorsystem greeted you 1 times!`
 
 
