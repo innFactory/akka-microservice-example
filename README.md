@@ -24,6 +24,16 @@ Steps to run the demo cluster:
     - if this doesn't work use ```minikube service service2``` which shows the URL you have to use and opens your favourite browser -  The http result in the browser should be `Service 2 is ok`
 - call the get path greet with a name ```e.g http://192.168.99.100:32462/greet/innFactory``` -  The http result should be something like `Hello innFactory - The actorsystem greeted you 1 times!`
 
+## Update service
+
+Example for service1:
+
+- make your code changes
+- in the file ```service1/build.sbt``` update the ```version in Docker``` value to ```0.2``` for example
+- go to k8s folder ```cd k8s```
+- run build script ```./build-images.sh```
+- rollout new version ```kubectl set image deployment/service1 service1=innfactory-test/service1:0.2```
+- check the status of the deployment with ```kubectl get pods```
 
 ## Notes
 
