@@ -42,8 +42,8 @@ It just tooks the first resolution address from the pod list with selector app=s
 Logging is also very dirty and there are a lot of println.
 
 ## Blogpost
-
-soon on medium
+- [English](https://medium.com/@innFactory/akka-service-deployment-on-kubernetes-e3aa8809aa8d)
+- [German](https://innfactory.de/softwareentwicklung/scala-akka-play-co/akka-service-deployment-on-kubernetes/)
 
 ## Contributors
 
