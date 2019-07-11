@@ -29,6 +29,7 @@ Steps to run the demo cluster:
 Example for service1:
 
 - make your code changes
+- configure docker eng in terminal eval $(minikube docker-env)
 - in the file ```service1/build.sbt``` update the ```version in Docker``` value to ```0.2``` for example
 - go to k8s folder ```cd k8s```
 - run build script ```./build-images.sh```
