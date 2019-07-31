@@ -25,10 +25,13 @@ Requirements:
 - the sbt version in ```project/build.properties``` has to be 0.13.7 or higher
 - Check the files ```project/plugins.sbt``` and ```build.sbt```. In this files you can find the configuration in the ```// LIGHTBEND TELEMETRY``` sections
 
-ToDo:
+## ToDo
 - Add all actors to config: https://developer.lightbend.com/docs/telemetry/current/instrumentations/akka/actors.html
     - See also for sharded actors
 - Configure dispatchers if necessary: https://developer.lightbend.com/docs/telemetry/current/instrumentations/akka/dispatchers.html
+
+## Problems
+- Prometheus doesn't collect data -> Add scrape_config to prometheus
 
 Sources:
 - https://developer.lightbend.com/docs/console/current/installation/index.html
