@@ -1,6 +1,6 @@
 name := "akka-microservice-sample"
 version := "0.1"
-scalaVersion := "2.13.0"
+scalaVersion := "2.12.0"
 
 //** COMMON **//
 lazy val common = project.in(file("common"))

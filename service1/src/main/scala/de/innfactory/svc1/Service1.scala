@@ -12,6 +12,7 @@ import akka.management.cluster.bootstrap.ClusterBootstrap
 import akka.management.scaladsl.AkkaManagement
 import akka.util.Timeout
 import de.innfactory.common.Config
+import kamon.Kamon
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
@@ -19,6 +20,8 @@ import scala.concurrent.duration._
 object Service1 extends App with Config {
   println("Service 1 starting.")
 
+  // Kamon
+  Kamon.init()
 
   implicit val actorSystem = ActorSystem("service1")
   implicit val materializer = ActorMaterializer()

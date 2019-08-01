@@ -8,5 +8,5 @@ enablePlugins(DockerPlugin)
 
 
 packageName in Docker := "innfactory-test/service2"
-version in Docker := "0.1"
+version in Docker := "0.2"
 dockerExposedPorts := Seq(2552, 8558, 8090)
