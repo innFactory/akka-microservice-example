@@ -9,8 +9,11 @@ Requirements:
 - Check the following files:
     - ```service1/build.sbt```
     - ```service1/src/main/resources/application.conf```
+    - ```service2/build.sbt```
+    - ```service2/src/main/resources/application.conf```
 - In the file ```service1/src/main/scala/de/innfactory/svc1/Service1.scala``` add ```Kamon.init()``` at the beginning of the application
-- In the file ```k8s/service1.yaml``` mention the annotation for prometheus
+- Make the above step for service 2 ```service2/src/main/scala/de/innfactory/svc2/Service2.scala``` add ```Kamon.init()``` at the beginning of the application
+- In the file ```k8s/service1.yaml``` and ```k8s/service2.yaml``` mention the annotation for prometheus
 - Build and update the service
 - To check if Kamon works run the following command ```kubectl port-forward YOURPODNAME 5266:5266```
 - Launch your browser and navigate to ```http://localhost:5266```
@@ -37,7 +40,6 @@ Requirements:
 - information-buckets for all units in the information dimension. Everything is scaled to bytes.
 - default-buckets are used when there is no measurement unit information in a metric.
  
-
 ## Sources
 - https://kamon.io/docs/latest/guides/frameworks/elementary-akka-setup/
 - https://kamon.io/docs/latest/reporters/prometheus/

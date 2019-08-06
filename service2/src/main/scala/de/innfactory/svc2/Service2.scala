@@ -12,6 +12,7 @@ import akka.management.scaladsl.AkkaManagement
 import akka.stream.ActorMaterializer
 import de.innfactory.common.Config
 import de.innfactory.svc1.grpc._
+import kamon.Kamon
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -19,6 +20,9 @@ import scala.concurrent.duration._
 
 object Service2 extends App with Config {
   println("Service 2 starting.")
+
+  // Kamon
+  Kamon.init()
 
   implicit val actorSystem = ActorSystem("service2")
   implicit val materializer = ActorMaterializer()

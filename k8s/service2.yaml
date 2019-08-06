@@ -56,6 +56,9 @@ metadata:
   labels:
     app: service2
   name: service2
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9095"
 spec:
   ports:
     - name: "http-api"
