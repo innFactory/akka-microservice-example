@@ -7,9 +7,6 @@ enablePlugins(JavaAppPackaging)
 enablePlugins(DockerPlugin)
 
 // LIGHTBEND TELEMETRY
-// Enable the Lightbend Telemetry (Cinnamon) sbt plugin
-//lazy val ehklar = project in file(".") enablePlugins (Cinnamon)
-
 // Use Coda Hale Metrics
 libraryDependencies += Cinnamon.library.cinnamonCHMetrics
 // Use Akka instrumentation
@@ -32,5 +29,5 @@ cinnamonLogLevel := "INFO"
 // LIGHTBEND TELEMETRY
 
 packageName in Docker := "innfactory-test/service1"
-version in Docker := "0.8"
+version in Docker := "0.1"
 dockerExposedPorts := Seq(2552, 8558)

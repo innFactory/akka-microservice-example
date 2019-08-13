@@ -60,6 +60,9 @@ metadata:
   labels:
     app: service1
   name: service1
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9001"
 spec:
   ports:
     - name: "grpc"
