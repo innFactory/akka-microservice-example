@@ -12,6 +12,7 @@ It runs on minikube and uses the newest akka-management release and the sbt nati
 Steps to run the demo cluster:
 
 - install minikube ```brew cask install minikube```
+- Launch minikube with enough resources ```minikube start --cpus 4 --memory 16384```
 - configure docker eng in terminal ```eval $(minikube docker-env)```
 - go to k8s folder ```cd k8s```
 - run build script ```./build-images.sh```
