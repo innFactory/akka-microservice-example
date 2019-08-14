@@ -18,6 +18,8 @@ libraryDependencies += Cinnamon.library.cinnamonAkkaHttp
 libraryDependencies += Cinnamon.library.cinnamonPrometheus
 libraryDependencies += Cinnamon.library.cinnamonPrometheusHttpServer
 
+libraryDependencies += Cinnamon.library.cinnamonJvmMetricsProducer
+
 enablePlugins (Cinnamon)
 
 // Add the Cinnamon Agent for run and test
