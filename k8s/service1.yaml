@@ -4,12 +4,15 @@ kind: Deployment
 metadata:
   labels:
     app: service1
+    version: "0.1"
   name: service1
+  namespace: innfactory-demo
 spec:
   replicas: 3
   selector:
     matchLabels:
       app: service1
+      version: "0.1"
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -19,7 +22,12 @@ spec:
     metadata:
       labels:
         app: service1
+        version: "0.1"
         actorSystemName: service1
+      namespace: innfactory-demo
+      annotations:
+        traffic.sidecar.istio.io/includeInboundPorts: "8081"
+        traffic.sidecar.istio.io/excludeOutboundPorts: "2552,8558"
     spec:
       containers:
         - name: service1
@@ -36,15 +44,16 @@ spec:
           #health
           ports:
             # akka remoting
-            - name: remoting
+            - name: "tcp-remoting"
               containerPort: 2552
               protocol: TCP
             # grpc
-            - name: grpc
+            - name: "grpc-grpc"
               containerPort: 8081
               protocol: TCP
             # akka-management bootstrap
-            - containerPort: 8558
+            - name: "tcp-boostrap"
+              containerPort: 8558
               protocol: TCP
           env:
             - name: AKKA_CLUSTER_BOOTSTRAP_SERVICE_NAME
@@ -59,13 +68,16 @@ kind: Service
 metadata:
   labels:
     app: service1
+    version: "0.1"
   name: service1
+  namespace: innfactory-demo
 spec:
   ports:
-    - name: "grpc"
+    - name: "grpc-grpc"
       port: 8081
       protocol: TCP
       targetPort: 8081
   selector:
     app: service1
+    version: "0.1"
   type: ClusterIP
