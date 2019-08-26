@@ -73,11 +73,9 @@ metadata:
   namespace: innfactory-demo
 spec:
   ports:
-    - name: "http-api"
-      port: 8090
-      protocol: TCP
+    - name: http
+      port: 8000
       targetPort: 8090
   selector:
     app: service2
     version: "0.1"
-  type: NodePort
