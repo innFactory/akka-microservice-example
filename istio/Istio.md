@@ -19,10 +19,10 @@ Requirements:
 
 # Useful stuff
 - Show kiali dashboard ```kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001```
+    - Navigate to ```http://localhost:20001```
     - Default credentials are: admin/admin
-    
-# ToDo
-- External access not possible
+- Show grafana dashboard ```kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000```
+    - Navigate to ```http://localhost:3000```
 
 # Sources
 - https://istio.io/docs/setup/kubernetes/platform-setup/minikube/
