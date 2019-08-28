@@ -12,7 +12,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "service2.example.com"
+        - "demo.example.com"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -21,7 +21,7 @@ metadata:
   namespace: "innfactory-demo"
 spec:
   hosts:
-    - "service2.example.com"
+    - "demo.example.com"
   gateways:
     - akka-gateway
   http:
