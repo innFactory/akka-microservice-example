@@ -5,6 +5,13 @@ Requirements:
 - Scala 2.11 or 2.12
 - Java 8+
 
+# Helm setup
+- ```TILLER_NAMESPACE=kube-system```
+- ```kubectl create serviceaccount --namespace $TILLER_NAMESPACE tiller```
+- ```kubectl create clusterrolebinding $TILLER_NAMESPACE:tiller --clusterrole=cluster-admin --serviceaccount=$TILLER_NAMESPACE:tiller```
+- ```helm init --wait --service-account tiller --tiller-namespace=$TILLER_NAMESPACE```
+- verify that helm client and server version match ```helm version```
+
 ## Application Configuration
 - Check the following files:
     - ```service1/build.sbt```
