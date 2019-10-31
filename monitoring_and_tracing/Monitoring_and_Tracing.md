@@ -28,14 +28,14 @@ Requirements:
     
 ## Prometheus setup
 - Create namespace ```kubectl create namespace kamon```
-- Install prometheus ```helm install --name prometheus --namespace kamon /PATH/TO/YOUR/PROJECT/akka-microservice-sample/kamon/prometheus/```
+- Install prometheus ```helm install --name prometheus --namespace kamon /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/prometheus/```
 - Check if pods are running: ```kubectl get pods -n kamon```
 - If something goes wrong you can delete prometheus with```kubectl delete --purge prometheus```
 - Access prometheus on port 9090 via ```kubectl port-forward -n kamon YOUR-PROMETHEUS-POD-NAME 9090:9090```
 
 ## Grafana setup
 - Create namespace ```kamon``` if it doesn't exist
-- Install prometheus ```helm install --name grafana --namespace kamon /PATH/TO/YOUR/PROJECT/akka-microservice-sample/kamon/grafana/```
+- Install prometheus ```helm install --name grafana --namespace kamon /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/```
 - Check if pods are running: ```kubectl get pods -n kamon```
 - If something goes wrong you can delete prometheus with```helm delete --purge grafana```
 - Access grafana on port 3000 via ```kubectl port-forward -n kamon YOUR-GRAFANA-POD-NAME 3000:3000```
@@ -43,7 +43,7 @@ Requirements:
 - Configure your dashboard
 
 ## Jaeger setup
-- ```kubectl create -n kamon -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/kamon/jaeger/jaeger-all-in-one-template.yml```
+- ```kubectl create -n kamon -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/jaeger/jaeger-all-in-one-template.yml```
 
 ## Kamon metric hint
 - time-buckets for metrics with a unit in the time dimension. Everything is scaled to seconds.
