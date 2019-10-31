@@ -42,6 +42,9 @@ Requirements:
 - Add a datasource with the url ```http://prometheus-server.kamon.svc.cluster.local```
 - Configure your dashboard
 
+## Jaeger setup
+- ```kubectl create -n kamon -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/kamon/jaeger/jaeger-all-in-one-template.yml```
+
 ## Kamon metric hint
 - time-buckets for metrics with a unit in the time dimension. Everything is scaled to seconds.
 - information-buckets for all units in the information dimension. Everything is scaled to bytes.
@@ -53,3 +56,4 @@ Requirements:
 - https://kamon.io/docs/latest/reporters/zipkin/
 - https://blog.kubernauts.io/cloud-native-monitoring-with-prometheus-and-grafana-9c8003ab9c7
 - https://github.com/kamon-io/kamon-prometheus
+- https://github.com/jaegertracing/jaeger-kubernetes/blob/master/README.md
