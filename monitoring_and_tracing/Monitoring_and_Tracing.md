@@ -1,5 +1,5 @@
 # Kamon
-Manual for configuring Kamon 2 for this Akka example
+Manual for configuring Kamon/Jaeger for this Akka example
 
 Requirements:
 - Scala 2.11 or 2.12
@@ -27,23 +27,24 @@ Requirements:
     - There you should see the Kamon status page
     
 ## Prometheus setup
-- Create namespace ```kubectl create namespace kamon```
-- Install prometheus ```helm install --name prometheus --namespace kamon /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/prometheus/```
-- Check if pods are running: ```kubectl get pods -n kamon```
+- Create namespace ```kubectl create monitoring_and_tracing kamon```
+- Install prometheus ```helm install --name prometheus --namespace monitoring_and_tracing /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/prometheus/```
+- Check if pods are running: ```kubectl get pods -n monitoring_and_tracing```
 - If something goes wrong you can delete prometheus with```kubectl delete --purge prometheus```
-- Access prometheus on port 9090 via ```kubectl port-forward -n kamon YOUR-PROMETHEUS-POD-NAME 9090:9090```
+- Access prometheus on port 9090 via ```kubectl port-forward -n monitoring_and_tracing YOUR-PROMETHEUS-POD-NAME 9090:9090```
 
 ## Grafana setup
-- Create namespace ```kamon``` if it doesn't exist
-- Install prometheus ```helm install --name grafana --namespace kamon /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/```
-- Check if pods are running: ```kubectl get pods -n kamon```
+- Create namespace ```monitoring_and_tracing``` if it doesn't exist
+- Install grafana ```helm install --name grafana --namespace monitoring_and_tracing /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/```
+- Check if pods are running: ```kubectl get pods -n monitoring_and_tracing```
 - If something goes wrong you can delete prometheus with```helm delete --purge grafana```
-- Access grafana on port 3000 via ```kubectl port-forward -n kamon YOUR-GRAFANA-POD-NAME 3000:3000```
-- Add a datasource with the url ```http://prometheus-server.kamon.svc.cluster.local```
+- Access grafana on port 3000 via ```kubectl port-forward -n monitoring_and_tracing YOUR-GRAFANA-POD-NAME 3000:3000```
+- Get the admin password with ```kubectl get secret --namespace kamon grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo``` 
+- Add a datasource with the url ```http://prometheus-server.monitoring_and_tracing.svc.cluster.local```
 - Configure your dashboard
 
 ## Jaeger setup
-- ```kubectl create -n kamon -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/jaeger/jaeger-all-in-one-template.yml```
+- ```kubectl create -n monitoring_and_tracing -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/jaeger/jaeger-all-in-one-template.yml```
 
 ## Kamon metric hint
 - time-buckets for metrics with a unit in the time dimension. Everything is scaled to seconds.
