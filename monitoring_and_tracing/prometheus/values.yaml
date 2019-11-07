@@ -1244,11 +1244,12 @@ serverFiles:
             action: replace
             target_label: kubernetes_pod_name
 
-      # Job for kamon
+      # Job for Kamon
       - job_name: 'kamon-prometheus'
         static_configs:
           - targets:
               - localhost:9095
+        scrape_interval: 10s
 
 # adds additional scrape configs to prometheus.yml
 # must be a string so you have to add a | after extraScrapeConfigs:
