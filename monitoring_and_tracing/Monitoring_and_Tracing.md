@@ -37,8 +37,8 @@ Requirements:
 
 ## Prometheus setup
 - Create namespace ```monitoring_and_tracing``` if it doesn't exist
-- In the file ```/PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/prometheus/velues.yaml``` the remote_write, remote_read value was added for InfluxDB.
-- In the above file a scrape config for Kamon with the name ```kamon-prometheus``` was added.
+- In the file ```/PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/prometheus/velues.yaml``` the remote_write, remote_read value was added for InfluxDB
+- In the above file a scrape config for Kamon with the name ```kamon-prometheus``` was added
 - Install prometheus ```helm install --name prometheus --namespace monitoring_and_tracing /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/prometheus/```
 - Check if pods are running: ```kubectl get pods -n monitoring_and_tracing```
 - If something goes wrong you can delete prometheus with```helm delete --purge prometheus```
@@ -56,18 +56,22 @@ Requirements:
 - Check if pods are running: ```kubectl get pods -n monitoring_and_tracing```
 - If something goes wrong you can delete prometheus with```helm delete --purge grafana```
 - Access grafana on port 3000 via ```kubectl port-forward -n monitoring_and_tracing YOUR-GRAFANA-POD-NAME 3000:3000```
-- Get the admin password with ```kubectl get secret --namespace kamon grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo``` 
+- Get the admin password with ```kubectl get secret --namespace monitoring_and_tracing grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo``` 
 - Add a datasource with the url ```http://prometheus-server.monitoring_and_tracing.svc.cluster.local```
-- !! Describe add datasource !!
-- Configure your dashboard
+    - On the Start page select ```Add datasource``` -> ```Prometheus``` -> URL ```http://prometheus-server.monitoring_and_tracing.svc.cluster.local``` -> klick ```Save & Test```
+- Add a datasource with the url ```http://influxdb.monitoring_and_tracing.svc.cluster.local``` as explained above
+- Import dashboard
+    - Click on the ```+``` on the left navigation -> ```Import```
+    - Import dashboard from /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/dashboards/Kamon Akka-1573324363254.json
+    - The Group and Router metrics are empty because this application doesn't have one
 
 ## Jaeger setup
 - ```kubectl create -n monitoring_and_tracing -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/jaeger/jaeger-all-in-one-template.yml```
 
 ## Kamon metric hint
-- time-buckets for metrics with a unit in the time dimension. Everything is scaled to seconds.
-- information-buckets for all units in the information dimension. Everything is scaled to bytes.
-- default-buckets are used when there is no measurement unit information in a metric.
+- time-buckets for metrics with a unit in the time dimension. Everything is scaled to seconds
+- information-buckets for all units in the information dimension. Everything is scaled to bytes
+- default-buckets are used when there is no measurement unit information in a metric
  
 ## Sources
 - https://kamon.io/docs/latest/guides/frameworks/elementary-akka-setup/
@@ -77,3 +81,4 @@ Requirements:
 - https://github.com/kamon-io/kamon-prometheus
 - https://github.com/jaegertracing/jaeger-kubernetes/blob/master/README.md
 - https://github.com/helm/charts/tree/master/stable/influxdb
+- https://github.com/StephenKing/kamon-grafana-dashboard

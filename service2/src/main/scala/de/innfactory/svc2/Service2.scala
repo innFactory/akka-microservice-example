@@ -37,7 +37,7 @@ object Service2 extends App with Config {
   val lookup: Future[ServiceDiscovery.Resolved] = discovery.lookup("service1", 20 seconds)
 
   val r = Await.result(lookup, 20 seconds)
-  val grpcHost = r.addresses.head.address.get.toString.replace("/","")
+  val grpcHost = r.addresses.head.address.get.toString.replace("/", "")
 
   println("resolved:")
   println(r)
@@ -50,12 +50,19 @@ object Service2 extends App with Config {
   val routes =
     (get & pathEndOrSingleSlash) {
       complete("Service 2 is ok")
-    } ~ get{
+    } ~ get {
       pathPrefix("greet") {
         path(PathMatchers.Segment) { name =>
           complete(askService1(name).map(m => s"Hello ${m.message} - The actorsystem greeted you ${m.greeted} times!"))
         }
       }
+    } ~ get {
+      pathPrefix("greet2") {
+        complete(
+          scala.io.Source.fromURL(s"http://$grpcHost:8558/alive").mkString
+        )
+      }
+
     }
 
 
@@ -67,8 +74,8 @@ object Service2 extends App with Config {
   val clientSettings = GrpcClientSettings.connectToServiceAt(grpcHost, service1Grpc).withTls(false).withDeadline(2 seconds).withUserAgent("service2")
 
 
-    /*.fromConfig(
-    clientName = "project.WithSpecificConfiguration").with*/
+  /*.fromConfig(
+  clientName = "project.WithSpecificConfiguration").with*/
 
   val client: GreeterService = GreeterServiceClient(clientSettings)
 
