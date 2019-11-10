@@ -57,10 +57,10 @@ Requirements:
 
 ## Grafana setup
 - Create namespace ```monitoring_and_tracing``` if it doesn't exist
-- Install grafana ```helm install --name grafana --namespace monitoring_and_tracing /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/```
+- Install Grafana ```helm install --name grafana --namespace monitoring_and_tracing /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/```
 - Check if pods are running ```kubectl get pods -n monitoring_and_tracing```
 - If something goes wrong you can delete prometheus with```helm delete --purge grafana```
-- Access grafana on port 3000 via ```kubectl port-forward -n monitoring_and_tracing YOUR-GRAFANA-POD-NAME 3000:3000```
+- Access Grafana on port 3000 via ```kubectl port-forward -n monitoring_and_tracing YOUR-GRAFANA-POD-NAME 3000:3000```
 - Get the admin password with ```kubectl get secret --namespace monitoring_and_tracing grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo``` 
 - Add a datasource with the url ```http://prometheus-server.monitoring_and_tracing.svc.cluster.local```
     - On the Start page select ```Add datasource``` -> ```Prometheus``` -> URL ```http://prometheus-server.monitoring_and_tracing.svc.cluster.local``` -> klick ```Save & Test```
@@ -75,6 +75,10 @@ Requirements:
 - Create namespace ```monitoring_and_tracing``` if it doesn't exist
 - Install configmap ```kubectl create -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/elasticsearch/configmap.yaml -n monitoring_and_tracing```
 - Install Elasticsearch  ```kubectl create -f /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/elasticsearch/elasticsearch.yaml -n monitoring_and_tracing```
+- Access Elasticsearch on port 9200 via ```kubectl port-forward -n monitoring_and_tracing elasticsearch-0 9200:9200```
+- Make http request to ```http://localhost:9200/_cat/indices?v```
+    - You can find the default user/password in the file ```/PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/elasticsearch/configmap.yaml``` 
+    - If there are some Jaeger indices, Jaeger can access the database
 
 ## Jaeger setup
 - Create namespace ```monitoring_and_tracing``` if it doesn't exist
