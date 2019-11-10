@@ -35,6 +35,11 @@ Requirements:
     - Start InfluxDB client: ```influx```
     - Create database: ```CREATE DATABASE "prometheus"```
 
+## OPTIONAL Chronograph
+- Create namespace ```kubectl create monitoring_and_tracing```
+- Install Chronograph ```helm install stable/chronograf --name chronograph --namespace monitoring_and_tracing```
+- Access Chronograph on port 8888 via ```kubectl port-forward --namespace namespace monitoring_and_tracing $(kubectl get pods --namespace namespace monitoring_and_tracing -l app=chronograph-chronograf -o jsonpath='{ .items[0].metadata.name }') 8888```
+
 ## Prometheus setup
 - Create namespace ```monitoring_and_tracing``` if it doesn't exist
 - In the file ```/PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/prometheus/velues.yaml``` the remote_write, remote_read value was added for InfluxDB
@@ -60,9 +65,10 @@ Requirements:
 - Add a datasource with the url ```http://prometheus-server.monitoring_and_tracing.svc.cluster.local```
     - On the Start page select ```Add datasource``` -> ```Prometheus``` -> URL ```http://prometheus-server.monitoring_and_tracing.svc.cluster.local``` -> klick ```Save & Test```
 - Add a datasource with the url ```http://influxdb.monitoring_and_tracing.svc.cluster.local``` as explained above
-- Import dashboard
+- Import dashboards
     - Click on the ```+``` on the left navigation -> ```Import```
-    - Import dashboard from /PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/dashboards/Kamon Akka-1573324363254.json
+    - Import dashboard from ```/PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/dashboards/Kamon Akka-1573324363254.json```
+    - Import dashboard from ```/PATH/TO/YOUR/PROJECT/akka-microservice-sample/monitoring_and_tracing/grafana/dashboards/InfluxDB Test-1573329837055.json```
     - The Group and Router metrics are empty because this application doesn't have one
 
 ## Jaeger setup
