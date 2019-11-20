@@ -2,6 +2,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: pod-reader
+  namespace: "innfactory-demo"
 rules:
   - apiGroups: [""] # "" indicates the core API group
     resources: ["pods"]
@@ -11,11 +12,12 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: read-pods
+  namespace: "innfactory-demo"
 subjects:
   # Note the `name` line below. The first default refers to the namespace. The second refers to the service account name.
   # For instance, `name: system:serviceaccount:myns:default` would refer to the default service account in namespace `myns`
   - kind: User
-    name: system:serviceaccount:default:default
+    name: system:serviceaccount:innfactory-demo:default
 roleRef:
   kind: Role
   name: pod-reader
