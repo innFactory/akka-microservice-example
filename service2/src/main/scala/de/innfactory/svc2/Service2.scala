@@ -53,7 +53,14 @@ object Service2 extends App with Config {
     } ~ get {
       pathPrefix("greet") {
         path(PathMatchers.Segment) { name =>
-          complete(askService1(name).map(m => s"Hello ${m.message} - The actorsystem greeted you ${m.greeted} times!"))
+          parameters('delay.as[Int] ? 0, 'responseCode.as[Int] ? 200){ (delay, responseCode) =>
+            complete({
+              Thread.sleep(delay)
+                askService1(name).map(m => {
+                  responseCode -> s"Hello ${m.message} - The actorsystem greeted you ${m.greeted} times with a delay of $delay ms!"
+                })
+            })
+          }
         }
       }
     } ~ get {
