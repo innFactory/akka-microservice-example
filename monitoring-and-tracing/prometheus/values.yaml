@@ -980,10 +980,10 @@ serverFiles:
 
   prometheus.yml:
     remote_write:
-      - url: "http://influxdb.kamon:8086/api/v1/prom/write?db=prometheus"
+      - url: "http://influxdb.monitoring-and-tracing:8086/api/v1/prom/write?db=prometheus"
 
     remote_read:
-      - url: "http://influxdb.kamon:8086/api/v1/prom/read?db=prometheus"
+      - url: "http://influxdb.monitoring-and-tracing:8086/api/v1/prom/read?db=prometheus"
 
     rule_files:
       - /etc/config/rules
