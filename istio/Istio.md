@@ -1,5 +1,5 @@
 # Istio
-Manual for configuring Istio for this Akka example
+Manual for configuration of Istio for this Akka example
 
 Requirements:
 - minikube with 4 cpus and 16gb of ram
@@ -17,7 +17,7 @@ Requirements:
 # Setup demo application
 - ```kubectl create -f innfactory-demo-ns.yaml```
 
-# Useful stuff
+# Dashboards
 - Show kiali dashboard ```kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001```
     - Navigate to ```http://localhost:20001```
     - Default credentials are: admin/admin
