@@ -35,6 +35,13 @@ Example for service1:
 - rollout new version ```kubectl set image deployment/service1 service1=innfactory-test/service1:0.2```
 - check the status of the deployment with ```kubectl get pods```
 
+## Monitoring and Tracing
+
+There are 3 branches with different tools for monitoring and tracing:
+- branch ```lightbend_monitoring```: Simple Monitoring example with Lightbend Monitoring.
+- branch ```kamon_jaeger```: Monitoring example with Kamon and tracing example with Jaeger .
+- branch ```istio```: Example Istio integration.
+
 ## Notes
 
 ServiceDiscovery is made with akka discovery and a bit dirty, because it does not use the cluster ip of service 1 for the grpc calls.
