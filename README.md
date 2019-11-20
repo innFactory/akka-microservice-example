@@ -59,5 +59,6 @@ Logging is also very dirty and there are a lot of println.
 ## Contributors
 
 -   [Tobias Jonas](https://github.com/jona7o)
+-   [Michael List](https://github.com/Michael-List)
 
 [innFactory - Cloud Engineering Experts - akka, grpc, k8s, kubernetes](https://innfactory.de/)
