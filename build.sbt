@@ -17,7 +17,6 @@ lazy val service2 = project.in(file("service2"))
   .dependsOn(service1api)
   .dependsOn(common)
 
-
 addCommandAlias("runAll", ";project service1; reStart; project service2; reStart; project akka-microservice-sample")
 addCommandAlias("buildAll", ";project service1; docker:publishLocal; project service2; docker:publishLocal; project akka-microservice-sample" )
 addCommandAlias("stopAll", "reStop")
