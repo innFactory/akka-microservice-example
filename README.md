@@ -39,8 +39,11 @@ Example for service1:
 
 There are 3 branches with different tools for monitoring and tracing:
 - branch ```lightbend_monitoring```: Simple Monitoring example with Lightbend Monitoring.
-- branch ```kamon_jaeger```: Monitoring example with Kamon and tracing example with Jaeger .
+    - folder ```lightbend_monitoring``` in the ```lightbend_monitoring``` branch.
+- branch ```kamon_jaeger```: Monitoring example with Kamon and tracing example with Jaeger.
+    - folder ```monitoring-and-tracing``` in the ```kamon_jaeger``` branch.
 - branch ```istio```: Example Istio integration.
+    - folder ```istio``` in the ```istio``` branch.
 
 ## Notes
 
