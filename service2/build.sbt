@@ -5,7 +5,7 @@ libraryDependencies ++= ReflectionResolver.getDefaultDependencies()
 // Kamon
 
 libraryDependencies ++= Seq(
-  "io.kamon" %% "kamon-bundle" % "2.0.0",
+  "io.kamon" %% "kamon-bundle" % "2.0.3",
   "io.kamon" %% "kamon-prometheus" % "2.0.0",
   "io.kamon" %% "kamon-jaeger" % "2.0.0"
 )
