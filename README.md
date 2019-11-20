@@ -12,7 +12,7 @@ It runs on minikube and uses the newest akka-management release and the sbt nati
 Steps to run the demo cluster:
 
 - install minikube ```brew cask install minikube```
-- Launch minikube with enough resources ```minikube start --cpus 4 --memory 16384```
+- launch minikube with enough resources ```minikube start --cpus 4 --memory 16384```
 - configure docker eng in terminal ```eval $(minikube docker-env)```
 - go to k8s folder ```cd k8s```
 - run build script ```./build-images.sh```
@@ -53,11 +53,12 @@ It just tooks the first resolution address from the pod list with selector app=s
 Logging is also very dirty and there are a lot of println.
 
 ## Blogpost
-
-soon on medium
+- [English](https://medium.com/@innFactory/akka-service-deployment-on-kubernetes-e3aa8809aa8d)
+- [German](https://innfactory.de/softwareentwicklung/scala-akka-play-co/akka-service-deployment-on-kubernetes/)
 
 ## Contributors
 
 -   [Tobias Jonas](https://github.com/jona7o)
+-   [Michael List](https://github.com/Michael-List)
 
 [innFactory - Cloud Engineering Experts - akka, grpc, k8s, kubernetes](https://innfactory.de/)
