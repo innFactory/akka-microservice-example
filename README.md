@@ -54,6 +54,7 @@ Logging is also very dirty and there are a lot of println.
 ## Blogpost
 - [English](https://medium.com/@innFactory/akka-service-deployment-on-kubernetes-e3aa8809aa8d)
 - [German](https://innfactory.de/softwareentwicklung/scala-akka-play-co/akka-service-deployment-on-kubernetes/)
+- [German](https://innfactory.de/softwareentwicklung/scala-akka-play-co/monitoring-und-tracing-fuer-akka-anwendungen-unter-kubernetes/)
 
 ## Contributors
 
